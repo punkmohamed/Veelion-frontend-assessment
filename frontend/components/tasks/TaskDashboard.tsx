@@ -37,9 +37,7 @@ export function TaskDashboard() {
             <h1 className="page-title" style={{ fontSize: "1.45rem" }}>
               Task dashboard
             </h1>
-            <p className="muted-text" style={{ margin: "0.2rem 0 0", fontSize: "0.9rem" }}>
-              Pulls from <code style={{ fontSize: "0.85em" }}>/api/tasks</code>
-            </p>
+  
           </div>
         </div>
         <button

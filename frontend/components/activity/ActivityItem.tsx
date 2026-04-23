@@ -1,5 +1,5 @@
 import type { ActivityLog } from '@/types/api';
-import { formatTime } from '@/utils/format';
+import { formatActivityWhen, getActivityEventLabel } from '@/utils/activityDisplay';
 import { iconForActivityAction } from './activityIcons';
 
 interface ActivityItemProps {
@@ -8,6 +8,7 @@ interface ActivityItemProps {
 
 const ActivityItem = ({ activity }: ActivityItemProps) => {
   const Icon = iconForActivityAction(activity.action);
+  const label = getActivityEventLabel(activity);
 
   return (
     <li className="activity-item">
@@ -15,10 +16,9 @@ const ActivityItem = ({ activity }: ActivityItemProps) => {
         <Icon size={20} strokeWidth={1.85} className="activity-item-icon" />
       </div>
       <div className="activity-item-body">
-        <div className="activity-item-action">{activity.action || '(no action)'}</div>
-        <div className="activity-item-info">{activity.info || '(no info)'}</div>
+        <p className="activity-item-label">{label}</p>
         <time className="activity-item-time" dateTime={activity.when}>
-          {formatTime(activity.when)}
+          {formatActivityWhen(activity.when)}
         </time>
       </div>
     </li>
