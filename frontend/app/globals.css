@@ -143,3 +143,10 @@ main {
   color: var(--muted);
 }
 
+/* Summary item */
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+}
+

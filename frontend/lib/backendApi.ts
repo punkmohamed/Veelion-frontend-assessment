@@ -55,6 +55,20 @@ export async function updateTaskInBackend(taskId: string, completed: boolean): P
   }
 }
 
+export async function getTasksSummary(): Promise<any> {
+  try {
+    const response = await fetch(buildBackendUrl("/reports/tasks-summary"), {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      throw new Error(await parseError(response));
+    }
+    return (await response.json()) as any;
+  } catch (error) {
+    throw new Error(error instanceof Error ? error.message : "Failed to load tasks summary.");
+  }
+}
+
 export async function getActivityFromBackend(): Promise<ActivityLog[]> {
   try {
     const response = await fetch(buildBackendUrl("/activity"), {
