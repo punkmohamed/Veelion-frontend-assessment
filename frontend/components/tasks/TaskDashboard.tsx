@@ -1,5 +1,6 @@
 "use client";
 
+import { LayoutList, Loader2, RefreshCw } from "lucide-react";
 import { useTasks } from "@/hooks/useTasks";
 import type { Task } from "@/types/api";
 import { StatusFilter } from "@/components/tasks/StatusFilter";
@@ -22,23 +23,50 @@ export function TaskDashboard() {
   };
 
   return (
-    <section className="stack">
-      <header className="card" style={{ padding: "1rem" }}>
-        <h1 style={{ marginTop: 0, marginBottom: "0.5rem" }}>Task Dashboard</h1>
+    <section className="stack stack-loose">
+      <header className="card section-padding" style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
+          <span
+            className="page-hero-icon"
+            style={{ width: 48, height: 48 }}
+            aria-hidden
+          >
+            <LayoutList size={24} strokeWidth={1.75} />
+          </span>
+          <div>
+            <h1 className="page-title" style={{ fontSize: "1.45rem" }}>
+              Task dashboard
+            </h1>
+            <p className="muted-text" style={{ margin: "0.2rem 0 0", fontSize: "0.9rem" }}>
+              Pulls from <code style={{ fontSize: "0.85em" }}>/api/tasks</code>
+            </p>
+          </div>
+        </div>
+        <button
+          type="button"
+          className="button button-ghost"
+          onClick={() => fetchTasks()}
+          disabled={loading}
+          aria-label="Reload tasks"
+        >
+          <RefreshCw size={18} className={loading ? "icon-spin" : ""} aria-hidden />
+          Reload
+        </button>
       </header>
 
       <StatusFilter value={filter} onChange={setFilter} />
 
       {loading ? (
-        <section className="card" style={{ padding: "1rem" }}>
-          <p style={{ margin: 0 }}>Loading tasks...</p>
+        <section className="card section-padding loading-inline" role="status">
+          <Loader2 className="icon-spin" size={26} aria-hidden />
+          <span>Loading tasks…</span>
         </section>
       ) : null}
 
       {error ? (
-        <section className="card" style={{ padding: "1rem", borderColor: "#e3b4c0", background: "#fff8fa" }}>
-          <p style={{ marginTop: 0, marginBottom: "0.75rem", color: "var(--danger)" }}>{error}</p>
-          <button type="button" className="button" onClick={fetchTasks}>
+        <section className="card section-padding alert alert-error">
+          <p className="alert-message">{error}</p>
+          <button type="button" className="button primary" onClick={fetchTasks}>
             Retry
           </button>
         </section>
