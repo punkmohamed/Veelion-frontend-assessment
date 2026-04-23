@@ -1,4 +1,5 @@
-import type { Task } from "@/types/api";
+import type { Task } from '@/types/api';
+import { formatTime } from '@/utils/format';
 
 type TaskItemProps = {
   task: Task;
@@ -8,21 +9,14 @@ type TaskItemProps = {
 
 export function TaskItem({ task, busy, onToggle }: TaskItemProps) {
   return (
-    <li
-      className="card"
-      style={{
-        padding: "0.85rem",
-        display: "grid",
-        gap: "0.4rem",
-      }}
-    >
-      <div style={{ display: "flex", justifyContent: "space-between", gap: "0.8rem", alignItems: "start" }}>
-        <p style={{ margin: 0, fontWeight: 600 }}>{task.title}</p>
-        <span className="badge">{task.completed ? "Completed" : "Pending"}</span>
+    <li className="card task-item">
+      <div className="task-item-header">
+        <p className="task-item-title">{task.title}</p>
+        <span className="badge">{task.completed ? 'Completed' : 'Pending'}</span>
       </div>
 
-      <small style={{ color: "var(--muted)" }}>
-        Updated: {new Date(task.updatedAt).toLocaleString()}
+      <small className="task-item-updated">
+        Updated: {formatTime(task.updatedAt)}
       </small>
 
       <div>
@@ -31,9 +25,9 @@ export function TaskItem({ task, busy, onToggle }: TaskItemProps) {
           className="button"
           onClick={() => onToggle(task)}
           disabled={busy}
-          aria-label={`Mark ${task.title} as ${task.completed ? "pending" : "completed"}`}
+          aria-label={`Mark ${task.title} as ${task.completed ? 'pending' : 'completed'}`}
         >
-          {busy ? "Saving..." : task.completed ? "Mark as Pending" : "Mark as Completed"}
+          {busy ? 'Saving...' : task.completed ? 'Mark as Pending' : 'Mark as Completed'}
         </button>
       </div>
     </li>

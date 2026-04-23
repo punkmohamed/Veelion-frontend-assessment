@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { ErrorResponse, Task, TaskFilter, TaskResponse, TasksResponse } from "@/types/api";
+import { filterTasks } from "@/utils/filterTasks";
 
 function getErrorMessage(error: unknown, fallback: string): string {
   if (error instanceof Error) {
@@ -81,15 +82,7 @@ export function useTasks() {
   }, [fetchTasks]);
 
   const filteredTasks = useMemo(() => {
-    if (filter === "completed") {
-      return tasks.filter((task) => task.completed);
-    }
-
-    if (filter === "pending") {
-      return tasks.filter((task) => !task.completed);
-    }
-
-    return tasks;
+    return filterTasks(tasks, filter);
   }, [tasks, filter]);
 
   return {
