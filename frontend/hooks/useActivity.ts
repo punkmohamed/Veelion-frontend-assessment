@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import type { ActivityLog } from '@/types/api';
+import { getActivityEventLabel } from '@/utils/activityDisplay';
 
 export function useActivity(query: string) {
   const [allActivity, setAllActivity] = useState<ActivityLog[]>([]);
@@ -31,11 +32,14 @@ export function useActivity(query: string) {
   const filteredActivity = useMemo(() => {
     if (!query.trim()) return allActivity;
     const lower = query.toLowerCase();
-    return allActivity.filter(
-      (item) =>
+    return allActivity.filter((item) => {
+      const haystack = getActivityEventLabel(item).toLowerCase();
+      return (
+        haystack.includes(lower) ||
         (item.action || '').toLowerCase().includes(lower) ||
         (item.info || '').toLowerCase().includes(lower)
-    );
+      );
+    });
   }, [allActivity, query]);
 
   return {

@@ -38,14 +38,14 @@ export default function ActivityPage() {
 
       <section className="card section-padding activity-toolbar">
         <label className="input-label" htmlFor="activity-search">
-          Search
+          Find events
         </label>
         <div className="input-with-icon">
           <Search className="input-with-icon-leading" size={18} aria-hidden />
           <input
             id="activity-search"
             className="input input-padded-left"
-            placeholder="Filter by action or details…"
+            placeholder="Search the feed…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoComplete="off"
